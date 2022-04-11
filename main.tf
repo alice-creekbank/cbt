@@ -2,7 +2,7 @@
 terraform {
 
   cloud {
-    organization = "nvaughn"
+    organization = "cbt"
     workspaces {
       name = "Nashville"
     }
@@ -38,10 +38,7 @@ module "vpc" {
   azs            = [var.subnet_zone]
   public_subnets = [var.web_subnet]
 
-  tags = {
-    Terraform   = "true"
-    Environment = "dev"
-  }
+  tags = local.tags
 }
 
 ###########################
@@ -129,10 +126,7 @@ module "ec2_instance" {
 
   count = var.instance_count
 
-  tags = {
-    Terraform   = "true"
-    Environment = "PROD"
-  }
+  tags = local.tags
 }
 
 
@@ -144,9 +138,6 @@ module "website_s3_bucket" {
   source = "github.com/nvaughn/website_s3_bucket"
 
   bucket_name = "cbt-demo-04-11-2022"
-  tags = {
-    Terraform   = "true"
-    Environment = "dev"
-  }
+  tags        = local.tags
 }
 
